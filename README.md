@@ -1,6 +1,6 @@
 # Web3APIScript
 
-Sample examples of webJS API
+Sample examples of web3JS API
 
 ## Install nodejs:
 ```bash
