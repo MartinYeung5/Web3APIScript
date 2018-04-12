@@ -8,16 +8,10 @@
  * This are examples of web3JS filer event API. The record of studing web3JS.
  * You can find the sample.sol in contracts.
  *
- *
  * Environment:
- * Geth (Please set TESTRPC flag false)
- * =====
- * Execute web3JS script in Geth network.
- *
- * TestRPC (Please set TESTRPC flag false)
+ * TestRPC
  * =======
- * Lock/Unlock API NOT Supported in TestRPC
- * 
+ * Don't need to wait blocks mined and unlock accounts
  *
  * Execute script:
  * $ nodejs scripts/eventFilter.js
@@ -49,8 +43,6 @@ const Web3 = require('web3');
 var web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:8545'));
 
 /* Set other variable */
-var abi = '[{"constant":false,"inputs":[],"name":"getNum","outputs":[{"name":"n","type":"uint256"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"n","type":"uint256"}],"name":"setNum","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"inputs":[{"name":"x","type":"uint256"}],"payable":false,"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"name":"caller","type":"address"},{"indexed":true,"name":"oldNum","type":"bytes32"},{"indexed":true,"name":"newNum","type":"bytes32"}],"name":"NumberSetEvent","type":"event"}]';
-var abiDefinition = JSON.parse(abi);
 var address = '0x52e14e30fa538e0ba51988ef039abb274ea8e57d'; //Contract Address
 var estimatedGas = 4700000;
 var filterWatch;
@@ -65,9 +57,7 @@ function getOptionObject(){
     var options = {
         "fromBlock": "0",
         "toBlock": "latest",
-        "address": [
-            address
-        ],
+        "address": address,
         "topics": [ 
             event_sig,
             null,
@@ -80,7 +70,6 @@ function getOptionObject(){
 
 
 function getFilterEvents(){
-
     //event NumberSetEvent(address indexed caller, bytes32 indexed oldNum, bytes32 indexed newNum);
     event_sig = getHashEventSignature('NumberSetEvent(address,bytes32,bytes32)');
     var options = getOptionObject()
@@ -112,6 +101,7 @@ function startWatchFilterEvents(){
 
 }
 
+
 /* If you want to Stop Watch doFilterStopWatching(filterWatch) */
 function stopWatchFilterEvents(filterWatch){
     if(filterWatch){
@@ -122,5 +112,5 @@ function stopWatchFilterEvents(filterWatch){
 
 
 /* Execute Script */
-GetFilterLogs()
+getFilterEvents()
 //startWatchFilterEvents()

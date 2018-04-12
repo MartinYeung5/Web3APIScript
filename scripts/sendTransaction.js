@@ -7,16 +7,9 @@
  *
  * This are examples of web3JS sendTransaction API. The record of studing web3JS.
  *
- *
  * Environment:
- * Geth (Please set TESTRPC flag false)
- * =====
- * Execute web3JS script in Geth network.
- *
- * TestRPC (Please set TESTRPC flag false)
  * =======
- * Lock/Unlock API NOT Supported in TestRPC
- * 
+ * Don't need to wait blocks mined and unlock accounts
  *
  * Execute script:
  * $ nodejs scrpits/sendTransaction.js
@@ -45,22 +38,9 @@ const Web3 = require('web3');
 const readline = require('readline-sync');
 var web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:8545'));
 
-/* Set run environment */
-var TESTRPC = true;                         // Default true if it run on Testrpc, otherwise flase
+/* Set other variable */
 var fromAccount = web3.eth.accounts[0]     
-var accountPasswd = "1"                     // fromAccount Password if it run on Geth network
 var toAccount = web3.eth.accounts[1]
-
-
-function unlockAccount(func){
-    web3.personal.unlockAccount(fromAccount, accountPasswd, function(error, result){
-        if(error) {
-            console.log("Unlock account failed:", error);
-        } else {
-            func()
-        }
-    });
-}
 
 
 function sendTransaction(){
@@ -80,12 +60,11 @@ function sendTransaction(){
         } else {
             var txn_hash = result
             console.log("TxHash:", txn_hash)
-            readline.question("Enter to continue if block is mined");
             web3.eth.getTransactionReceipt(txn_hash, function(error, result){
                 if(error) {
                     console.log("Get Transaction Receipt Error:", error);
                 } else {
-                    console.log("Result:", result);
+                    console.log("Get Transaction Recepit:\n", result);
                 }
             })
         }
@@ -94,8 +73,4 @@ function sendTransaction(){
 
 
 /* Execute Script */
-if(TESTRPC){
-    sendTransaction();
-} else {
-    unlockAccount(sendTransaction);
-}
+sendTransaction();

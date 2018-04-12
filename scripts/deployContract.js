@@ -8,16 +8,10 @@
  * This are examples of web3JS depoly contract API. The record of studing web3JS.
  * You can find the sample.sol in contracts.
  *
- *
  * Environment:
- * Geth (Please set TESTRPC flag false)
- * =====
- * Execute web3JS script in Geth network.
- *
- * TestRPC (Please set TESTRPC flag false)
+ * TestRPC
  * =======
- * Lock/Unlock API NOT Supported in TestRPC
- * 
+ * Don't need to wait blocks mined and unlock accounts
  *
  * Execute script:
  * $ nodejs scripts/deployContract.js
@@ -31,9 +25,7 @@ const readline = require('readline-sync');
 var web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:8545'));
 
 /* Set run environment */
-var TESTRPC = true;                         // Default true if it run on Testrpc, otherwise flase
 var fromAccount = web3.eth.accounts[0]     
-var accountPasswd = "1"                     // fromAccount Password if it run on Geth network
 var toAccount = web3.eth.accounts[1]
 
 
@@ -42,17 +34,6 @@ var bytecode = '0x6060604052341561000f57600080fd5b60405160208061013d833981016040
 var abi = '[{"constant":false,"inputs":[],"name":"getNum","outputs":[{"name":"n","type":"uint256"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"n","type":"uint256"}],"name":"setNum","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"inputs":[{"name":"x","type":"uint256"}],"payable":false,"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"name":"caller","type":"address"},{"indexed":true,"name":"oldNum","type":"bytes32"},{"indexed":true,"name":"newNum","type":"bytes32"}],"name":"NumberSetEvent","type":"event"}]';
 var gas = 4700000;
 var abiDefinition = JSON.parse(abi);
-
-
-function unlockAccount(func){
-    web3.personal.unlockAccount(fromAccount, accountPasswd, function(error, result){
-        if(error) {
-            console.log("Unlock account failed:", error);
-        } else {
-            func()
-        }
-    });
-}
 
 
 function deployContract() {
@@ -85,6 +66,7 @@ function deployContractBySendTransaction() {
     var txnObject = {
         from: web3.eth.accounts[0],
         data: conData,
+        gas: gas
     }
 
     web3.eth.sendTransaction(txnObject, function(error, result) {
@@ -93,8 +75,6 @@ function deployContractBySendTransaction() {
         } else {
             var txn_hash = result
             console.log("Transaction hash:", txn_hash);
-            readline.question("Enter to continue if block is mined");
-
             web3.eth.getTransactionReceipt(txn_hash, function(error, result){
                 if(error) {
                     console.log("Get transaction recepit error:", error);
@@ -108,10 +88,6 @@ function deployContractBySendTransaction() {
 
 
 /* Execute Script */
-if(TESTRPC){
-    deployContract();
-    //deployContractBySendTransaction();
-} else {
-    unlockAccount(deployContract);
-    //unlockAccount(deployContractBySendTransaction);
-}
+deployContract();
+//deployContractBySendTransaction();
+

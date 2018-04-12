@@ -7,17 +7,10 @@
  *
  * This are examples of web3JS API. The record of studing web3JS.
  *
- *
  * Environment:
- * Geth (Please set TESTRPC flag false)
- * =====
- * Execute web3JS script in Geth network.
- *
- * TestRPC (Please set TESTRPC flag false)
  * =======
- * Lock/Unlock API NOT Supported in TestRPC
- * 
- *
+ * Don't need to wait blocks mined and unlock accounts
+* 
  * Execute script:
  * $ nodejs scripts/commonWeb3Api.js
  *
@@ -28,10 +21,6 @@
 const Web3 = require('web3');
 var web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:8545'));
 
-/* Set run environment */
-var TESTRPC = true;                // Default true if it run on Testrpc, otherwise flase
-var account = web3.eth.accounts[0] // Lock/Unlock Account if it run on Geth network
-var passwd = "1"                   // Account Password if it run on Geth network
 
 /* Web3 Listening */
 console.log("web3.net.listening:", web3.net.listening);
@@ -105,40 +94,3 @@ web3.eth.getBalance(web3.eth.accounts[0],web3.eth.defaultBlock,function(error,re
     var bal = web3.fromWei(result,'ether').toFixed(2);
     console.log("Async get balance:", bal);
 });
-
-
-/*  Lock/Unlock Account
- *  Don't need to lock/unlock account in Testrpc 
-*/
-if(!TESTRPC){
-    /*Web3 Unlock*/
-    web3.personal.unlockAccount(account, passwd, 3, function(error, result){
-        if(error) {
-            console.log("web3.personal.unlockAccount():", error);
-        } else {
-            console.log("web3.personal.unlockAccount():", result);
-        }
-    })
-
-    /*Web3 Lock*/
-    web3.personal.lockAccount(account, passwd, function(error, result){
-        if(error) {
-            console.log("Async web3.personal.lockAccount():", error);
-        } else {
-            console.log("Async web3.personal.lockAccount():", result);
-        }
-    })
-    var result = web3.personal.lockAccount(account, passwd);
-    console.log("Sync web3.personal.lockAccount():", result);
-}
-
-
-
-
-
-
-
-
-
-
-

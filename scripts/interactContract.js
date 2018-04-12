@@ -8,16 +8,8 @@
  * This are examples of web3JS interact contract API. The record of studing web3JS.
  * You can find the sample.sol in contracts.
  *
- *
  * Environment:
- * Geth (Please set TESTRPC flag false)
- * =====
- * Execute web3JS script in Geth network.
- *
- * TestRPC (Please set TESTRPC flag false)
- * =======
- * Lock/Unlock API NOT Supported in TestRPC
- * 
+ * TestRPC (Don't need to wait blocks mined and unlock accounts)
  *
  * Execute script:
  * $ nodejs scripts/interactContract.js
@@ -29,9 +21,7 @@ const Web3 = require('web3');
 var web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:8545'));
 
 /* Set run environment */
-var TESTRPC = true;                         // Default true if it run on Testrpc, otherwise flase
 var fromAccount = web3.eth.accounts[0]     
-var accountPasswd = "1"                     // fromAccount Password if it run on Geth network
 var toAccount = web3.eth.accounts[1]
 
 /* Set other variable */
@@ -39,17 +29,6 @@ var abi = '[{"constant":false,"inputs":[],"name":"getNum","outputs":[{"name":"n"
 var abiDefinition = JSON.parse(abi);
 var address = '0x52e14e30fa538e0ba51988ef039abb274ea8e57d'  //Contract Address
 var estimatedGas = 4700000
-
-
-function unlockAccount(func){
-    web3.personal.unlockAccount(fromAccount, accountPasswd, function(error, result){
-        if(error) {
-            console.log("Unlock account failed:", error);
-        } else {
-            func()
-        }
-    });
-}
 
 
 function callContractFunction(){
@@ -89,11 +68,5 @@ function sendContractFunction(){
 
 
 /* Execute Script */
-if(TESTRPC){
-    //sendContractFunction();
-    callContractFunction();
-
-} else {
-    //unlockAccount(sendContractFunction);
-    callContractFunction();
-}
+callContractFunction();
+//sendContractFunction();

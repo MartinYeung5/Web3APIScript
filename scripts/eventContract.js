@@ -8,20 +8,13 @@
  * This are examples of web3JS contract event API. The record of studing web3JS.
  * You can find the sample.sol in contracts.
  *
- *
  * Environment:
- * Geth (Please set TESTRPC flag false)
- * =====
- * Execute web3JS script in Geth network.
- *
- * TestRPC (Please set TESTRPC flag false)
+ * TestRPC
  * =======
- * Lock/Unlock API NOT Supported in TestRPC
- * 
+ * Don't need to wait blocks mined and unlock accounts
  *
  * Execute script:
  * $ nodejs scripts/eventContract.js
- * 
  *
  * Return:
  * Result example of contract get event
@@ -43,18 +36,7 @@
  * }]
  * 
  */
-{ logIndex: 0,
-          transactionIndex: 0,
-          transactionHash: '0x886f258c7a84c61e06e69ee1c10cc0333ca01394eda77bef8e6ca54f4ae22b6b',
-          blockHash: '0x7a53312b015ebe12f38c3c5c11c7da96fc27c7e3b5bd754553cf07e39fd2c960',
-          blockNumber: 5,
-          address: '0xf23578a726c37a713faaa9eaa05734d2b30593b1',
-          type: 'mined',
-          event: 'NumberSetEvent',
-          args: 
-       { caller: '0x4f653b6ef76e9e48fca36d3063695f7a48af354b',
-                    oldNum: '0x0000000000000000000000000000000000000000000000000000000000000005',
-                    newNum: '0x0000000000000000000000000000000000000000000000000000000000000005' } }
+
 
 /* Load web3JS and connect to test environment */
 const Web3 = require('web3');
