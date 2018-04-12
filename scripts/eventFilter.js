@@ -50,7 +50,7 @@ var filterWatch;
 
 
 function getHashEventSignature(evt){
-    return web3.sha3(evt)
+    return web3.sha3(evt);
 }
 
 
@@ -65,15 +65,15 @@ function getOptionObject(){
             null,
             "0x0000000000000000000000000000000000000000000000000000000000000005"
         ]
-    }
-    return options
+    };
+    return options;
 }
 
 
 function getFilterEvents(){
     //event NumberSetEvent(address indexed caller, bytes32 indexed oldNum, bytes32 indexed newNum);
     event_sig = getHashEventSignature('NumberSetEvent(address,bytes32,bytes32)');
-    var options = getOptionObject()
+    var options = getOptionObject();
     var filterGet = web3.eth.filter(options);
     filterGet.get(function(error, result){
         if(error){
@@ -90,7 +90,7 @@ function getFilterEvents(){
 function startWatchFilterEvents(){
     //event NumberSetEvent(address indexed caller, bytes32 indexed oldNum, bytes32 indexed newNum);
     event_sig = getHashEventSignature('NumberSetEvent(address,bytes32,bytes32)');
-    var options = getOptionObject()
+    var options = getOptionObject();
     filterWatch = web3.eth.filter(options);
     filterWatch.watch(function(error, result){
         if(error){
@@ -113,5 +113,5 @@ function stopWatchFilterEvents(filterWatch){
 
 
 /* Execute Script */
-getFilterEvents()
+getFilterEvents();
 //startWatchFilterEvents()

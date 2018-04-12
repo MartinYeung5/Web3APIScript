@@ -39,8 +39,8 @@ const readline = require('readline-sync');
 var web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:8545'));
 
 /* Set other variable */
-var fromAccount = web3.eth.accounts[0]     
-var toAccount = web3.eth.accounts[1]
+var fromAccount = web3.eth.accounts[0];
+var toAccount = web3.eth.accounts[1];
 
 
 function sendTransaction(){
@@ -58,15 +58,15 @@ function sendTransaction(){
         if(error) {
             console.log("Send Transaction Error:", error);
         } else {
-            var txn_hash = result
-            console.log("TxHash:", txn_hash)
+            var txn_hash = result;
+            console.log("TxHash:", txn_hash);
             web3.eth.getTransactionReceipt(txn_hash, function(error, result){
                 if(error) {
                     console.log("Get Transaction Receipt Error:", error);
                 } else {
                     console.log("Get Transaction Recepit:\n", result);
                 }
-            })
+            });
         }
     });
 }

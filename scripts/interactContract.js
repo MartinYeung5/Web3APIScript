@@ -22,14 +22,14 @@ const Web3 = require('web3');
 var web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:8545'));
 
 /* Set run environment */
-var fromAccount = web3.eth.accounts[0]     
-var toAccount = web3.eth.accounts[1]
+var fromAccount = web3.eth.accounts[0];
+var toAccount = web3.eth.accounts[1];
 
 /* Set other variable */
 var abi = '[{"constant":false,"inputs":[],"name":"getNum","outputs":[{"name":"n","type":"uint256"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"n","type":"uint256"}],"name":"setNum","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"inputs":[{"name":"x","type":"uint256"}],"payable":false,"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"name":"caller","type":"address"},{"indexed":true,"name":"oldNum","type":"bytes32"},{"indexed":true,"name":"newNum","type":"bytes32"}],"name":"NumberSetEvent","type":"event"}]';
 var abiDefinition = JSON.parse(abi);
 var address = readline.question("Contract Address: ");  //Contract Address
-var estimatedGas = 4700000
+var estimatedGas = 4700000;
 
 
 function callContractFunction(){
@@ -54,7 +54,7 @@ function sendContractFunction(){
     var txnObject = {
         from: fromAccount,
         gas: estimatedGas
-    }
+    };
 
     // contractInstance.METHOD.sendTransaction, METHOD=setNum is the function of contract
     var parameterValue = 5 ;

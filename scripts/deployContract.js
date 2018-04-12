@@ -25,8 +25,8 @@ const readline = require('readline-sync');
 var web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:8545'));
 
 /* Set run environment */
-var fromAccount = web3.eth.accounts[0]     
-var toAccount = web3.eth.accounts[1]
+var fromAccount = web3.eth.accounts[0];
+var toAccount = web3.eth.accounts[1];
 
 
 /* Set other variable */
@@ -42,7 +42,7 @@ function deployContract() {
         from: fromAccount,
         data: bytecode,
         gas: gas
-    }
+    };
     var constructor_param = 10;
 
     contractInstance.new(constructor_param, params, function(error, result){
@@ -62,18 +62,18 @@ function deployContract() {
 /* You can also deploy contract by sending transaction */
 function deployContractBySendTransaction() {
     var contract = web3.eth.contract(abiDefinition);
-    var conData = contract.new.getData(10, {data: bytecode})
+    var conData = contract.new.getData(10, {data: bytecode});
     var txnObject = {
         from: web3.eth.accounts[0],
         data: conData,
         gas: gas
-    }
+    };
 
     web3.eth.sendTransaction(txnObject, function(error, result) {
         if(error) {
             console.log("Send transaction failed:", error);
         } else {
-            var txn_hash = result
+            var txn_hash = result;
             console.log("Transaction hash:", txn_hash);
             web3.eth.getTransactionReceipt(txn_hash, function(error, result){
                 if(error) {
@@ -81,7 +81,7 @@ function deployContractBySendTransaction() {
                 } else {
                     console.log("Get transaction recepit result:", result);
                 }
-            })
+            });
         }
     });
 }

@@ -30,7 +30,7 @@ web3.net.getListening(function(error, result) {
     } else {
         console.log("we3.net.getListening():", result);
     }
-})
+});
 
 
 /* Web3 PeerCount */
@@ -41,7 +41,7 @@ web3.net.getPeerCount(function(error, result) {
     } else {
         console.log("web3.net.getPeerCount():", result);
     }
-})
+});
 
 
 /* Web3 Syncing */
@@ -52,7 +52,7 @@ web3.eth.getSyncing(function(error, result) {
     } else {
         console.log("web3.eth.getSyncing():", result);
     }
-})
+});
 
 
 /* Web3 Mining */
@@ -63,7 +63,7 @@ web3.eth.getMining(function(error, result) {
     } else {
         console.log("web3.eth.getMining():", result);
     }
-})
+});
 
 
 /* Web3 Coinbase */
@@ -74,16 +74,16 @@ web3.eth.getCoinbase(function(error, result) {
     } else {
         console.log("web3.eth.getCoinbase():", result);
     }
-})
+});
 
 
 /* Web3 Default Account */
 var defaultAccount = web3.eth.defaultAccount;
 if(!defaultAccount) {
-        web3.eth.defaultAccount = web3.eth.accounts[0]
-        defaultAccont = web3.eth.accounts[0]
+        web3.eth.defaultAccount = web3.eth.accounts[0];
+        defaultAccont = web3.eth.accounts[0];
 }
-console.log("web3.eth.defaultAccount:", web3.eth.defaultAccount)
+console.log("web3.eth.defaultAccount:", web3.eth.defaultAccount);
 
 
 /* Web3 GetBalance */
