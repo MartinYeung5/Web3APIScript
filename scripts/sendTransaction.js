@@ -1,5 +1,27 @@
 /**
- * SendTransaction example
+ * web3JS sendTraction API Script 
+ * April 12th, 2018
+ * Author:
+ *      AlbertLin
+ *      ksin751119@gmail.com
+ *
+ * This are examples of web3JS sendTransaction API. The record of studing web3JS.
+ *
+ *
+ * Environment:
+ * Geth (Please set TESTRPC flag false)
+ * =====
+ * Execute web3JS script in Geth network.
+ *
+ * TestRPC (Please set TESTRPC flag false)
+ * =======
+ * Lock/Unlock API NOT Supported in TestRPC
+ * 
+ *
+ * Execute script:
+ * $ nodejs scrpits/sendTransaction.js
+ *
+ * Return:
  * Result of getTransactionReceipt() if the transaction is mined.
  * { blockHash: '0x2c4fa1b1afec375dc76baf11af4f6b7f82c54a4194495e169a56080dfea86e76',
  *   blockNumber: 214,
@@ -14,16 +36,20 @@
  *   transactionHash: '0xa391abee069753aee3ae35e6d4f25b79ee2ec72a467b7551ddb9d4ec702f8dea',
  *   transactionIndex: 0 
  *   }
-*/
+ *
+ */
 
 
+/* Load web3JS and connect to test environment */
 const Web3 = require('web3');
 const readline = require('readline-sync');
-
-var fromAccount = web3.eth.accounts[0]
-var toAccount = web3.eth.accounts[1]
-var accountPasswd = '1'
 var web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:8545'));
+
+/* Set run environment */
+var TESTRPC = true;                         // Default true if it run on Testrpc, otherwise flase
+var fromAccount = web3.eth.accounts[0]     
+var accountPasswd = "1"                     // fromAccount Password if it run on Geth network
+var toAccount = web3.eth.accounts[1]
 
 
 function unlockAccount(func){
@@ -67,5 +93,9 @@ function sendTransaction(){
 }
 
 
-// Execute Script
-unlockAccount(sendTransaction);
+/* Execute Script */
+if(TESTRPC){
+    sendTransaction();
+} else {
+    unlockAccount(sendTransaction);
+}

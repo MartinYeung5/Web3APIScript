@@ -1,33 +1,59 @@
 /**
- * Fliter Event & Logs
+ * web3JS Contract Instance Filter Event&Logs API Script 
+ * April 12th, 2018
+ * Author:
+ *      AlbertLin
+ *      ksin751119@gmail.com
  *
- * result =
-   [{
-       address:'0x52e14e30fa538e0ba51988ef039abb274ea8e57d',
-       topics:[
-           '0x108fd0bf2253f6baf35f111ba80fb5369c2e004b88e36ac8486fcee0c87e61ce',
-           '0x000000000000000000000000c78f884f551036f1510fd81fd0bd9d407f3fae50',
-           '0x0000000000000000000000000000000000000000000000000000000000000005',
-           '0x0000000000000000000000000000000000000000000000000000000000000005'
-       ],
-       data:'0x',
-       blockNumber:464,
-       transactionHash:'0x6ebf824973834bf841d03f5e0d1c07c09b8d4238589b900198e5cca77053bee7',
-       transactionIndex:1,
-       blockHash:'0xfa6f7f7357169a1cef4db479da96c2b9471c9b888b11b29a335d7b6e4d9cc11d',
-       logIndex:1,
-       removed:false
-    }]
+ * This are examples of web3JS filer event API. The record of studing web3JS.
+ * You can find the sample.sol in contracts.
+ *
+ *
+ * Environment:
+ * Geth (Please set TESTRPC flag false)
+ * =====
+ * Execute web3JS script in Geth network.
+ *
+ * TestRPC (Please set TESTRPC flag false)
+ * =======
+ * Lock/Unlock API NOT Supported in TestRPC
+ * 
+ *
+ * Execute script:
+ * $ nodejs scripts/eventFilter.js
+ *
+ * Return:
+ * Result example of filter get log 
+ * [{
+ *   address:'0x52e14e30fa538e0ba51988ef039abb274ea8e57d',
+ *   topics:[
+ *      '0x108fd0bf2253f6baf35f111ba80fb5369c2e004b88e36ac8486fcee0c87e61ce',
+ *      '0x000000000000000000000000c78f884f551036f1510fd81fd0bd9d407f3fae50',
+ *      '0x0000000000000000000000000000000000000000000000000000000000000005',
+ *      '0x0000000000000000000000000000000000000000000000000000000000000005'
+ *   ],
+ *   data:'0x',
+ *   blockNumber:464,
+ *   transactionHash:'0x6ebf824973834bf841d03f5e0d1c07c09b8d4238589b900198e5cca77053bee7',
+ *   transactionIndex:1,
+ *   blockHash:'0xfa6f7f7357169a1cef4db479da96c2b9471c9b888b11b29a335d7b6e4d9cc11d',
+ *   logIndex:1,
+ *   removed:false
+ * }]
+ *
  */
 
-const Web3 = require('web3');
 
+/* Load web3JS and connect to test environment */
+const Web3 = require('web3');
+var web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:8545'));
+
+/* Set other variable */
 var abi = '[{"constant":false,"inputs":[],"name":"getNum","outputs":[{"name":"n","type":"uint256"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"n","type":"uint256"}],"name":"setNum","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"inputs":[{"name":"x","type":"uint256"}],"payable":false,"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"name":"caller","type":"address"},{"indexed":true,"name":"oldNum","type":"bytes32"},{"indexed":true,"name":"newNum","type":"bytes32"}],"name":"NumberSetEvent","type":"event"}]';
 var abiDefinition = JSON.parse(abi);
-var address = '0x52e14e30fa538e0ba51988ef039abb274ea8e57d';
+var address = '0x52e14e30fa538e0ba51988ef039abb274ea8e57d'; //Contract Address
 var estimatedGas = 4700000;
 var filterWatch;
-var web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:8545'));
 
 
 function getHashEventSignature(evt){
@@ -83,11 +109,10 @@ function startWatchFilterEvents(){
             console.log(result);
         }
     });
-    // If you want to Stop Watch doFilterStopWatching(filterWatch)
 
 }
 
-
+/* If you want to Stop Watch doFilterStopWatching(filterWatch) */
 function stopWatchFilterEvents(filterWatch){
     if(filterWatch){
         filterWatch.stopWatching();
@@ -96,6 +121,6 @@ function stopWatchFilterEvents(filterWatch){
 }
 
 
-// Execute Script
-//GetFilterLogs()
-startWatchFilterEvents()
+/* Execute Script */
+GetFilterLogs()
+//startWatchFilterEvents()

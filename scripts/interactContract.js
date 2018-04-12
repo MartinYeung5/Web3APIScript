@@ -1,18 +1,44 @@
 /**
- * Interact with Contract 
+ * web3JS Interact Contract API Script 
+ * April 12th, 2018
+ * Author:
+ *      AlbertLin
+ *      ksin751119@gmail.com
+ *
+ * This are examples of web3JS interact contract API. The record of studing web3JS.
+ * You can find the sample.sol in contracts.
+ *
+ *
+ * Environment:
+ * Geth (Please set TESTRPC flag false)
+ * =====
+ * Execute web3JS script in Geth network.
+ *
+ * TestRPC (Please set TESTRPC flag false)
+ * =======
+ * Lock/Unlock API NOT Supported in TestRPC
+ * 
+ *
+ * Execute script:
+ * $ nodejs scripts/interactContract.js
  *
  */
 
+/* Load web3JS and connect to test environment */
 const Web3 = require('web3');
-
 var web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:8545'));
+
+/* Set run environment */
+var TESTRPC = true;                         // Default true if it run on Testrpc, otherwise flase
+var fromAccount = web3.eth.accounts[0]     
+var accountPasswd = "1"                     // fromAccount Password if it run on Geth network
+var toAccount = web3.eth.accounts[1]
+
+/* Set other variable */
 var abi = '[{"constant":false,"inputs":[],"name":"getNum","outputs":[{"name":"n","type":"uint256"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"n","type":"uint256"}],"name":"setNum","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"inputs":[{"name":"x","type":"uint256"}],"payable":false,"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"name":"caller","type":"address"},{"indexed":true,"name":"oldNum","type":"bytes32"},{"indexed":true,"name":"newNum","type":"bytes32"}],"name":"NumberSetEvent","type":"event"}]';
 var abiDefinition = JSON.parse(abi);
-var address = '0x52e14e30fa538e0ba51988ef039abb274ea8e57d'
+var address = '0x52e14e30fa538e0ba51988ef039abb274ea8e57d'  //Contract Address
 var estimatedGas = 4700000
-var fromAccount = web3.eth.accounts[0]
-var toAccount = web3.eth.accounts[1]
-var accountPasswd = '1'
 
 
 function unlockAccount(func){
@@ -62,6 +88,12 @@ function sendContractFunction(){
 }
 
 
-// Execute Script
-//unlockAccount(sendContractFunction);
-callContractFunction();
+/* Execute Script */
+if(TESTRPC){
+    //sendContractFunction();
+    callContractFunction();
+
+} else {
+    //unlockAccount(sendContractFunction);
+    callContractFunction();
+}
