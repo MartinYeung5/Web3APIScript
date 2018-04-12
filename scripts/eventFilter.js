@@ -39,11 +39,12 @@
 
 
 /* Load web3JS and connect to test environment */
+const readline = require('readline-sync');
 const Web3 = require('web3');
 var web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:8545'));
 
 /* Set other variable */
-var address = '0x52e14e30fa538e0ba51988ef039abb274ea8e57d'; //Contract Address
+var address = readline.question("Contract Address: "); //Contract Address
 var estimatedGas = 4700000;
 var filterWatch;
 
