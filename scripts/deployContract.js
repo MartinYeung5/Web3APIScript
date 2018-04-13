@@ -37,7 +37,7 @@ var abiDefinition = JSON.parse(abi);
 
 
 function deployContract() {
-    var  contractInstance = web3.eth.contract(abiDefinition);
+    var contractInstance = web3.eth.contract(abiDefinition);
     var params = {
         from: fromAccount,
         data: bytecode,
