@@ -16,6 +16,9 @@
  * Execute script:
  * $ nodejs scripts/eventFilter.js
  *
+ * Contract Event:
+ * event NumberSetEvent(address indexed caller, bytes32 indexed oldNum, bytes32 indexed newNum);
+ *
  * Return:
  * Result example of filter get log 
  * [{
